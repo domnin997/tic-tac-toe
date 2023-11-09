@@ -24,9 +24,20 @@
         <div class="cell"></div>
     </div>
     <div class="game-over-window">
-        <div class="game-over-window__text"> </div>
-        <button class="restart-btn">Начать заново</button>
+        <div class="game-over-msg">
+            <div class="game-over-window__text"> </div>
+            <button class="reset-btn">Начать заново</button>
+        </div>    
+        
+        
+        <div class="progress-dialog">
+            <div class="progress-dialog__msg">У вас есть сохраненный прогресс - продолжить?</div>
+            <div class="progress-dialog__btn-cont">
+                <button class="continue-btn">Продолжить</button>
+                <button class="reset-btn">Сбросить</button>
+            </div>
+        </div>
     </div>
-    <script src="./js/main.js"></script>
+    <script src="./js/main.js" type="module"></script>
 </body>
 </html>
