@@ -1,0 +1,140 @@
+.game-field {
+    width: 100vh;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid var(--field-border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.o::before {
+    background-color: var(--field-border-color);
+}
+
+
+.game-field.x .cell:not(.x):not(.o):hover::before,
+.game-field.x .cell:not(.x):not(.o):hover::after,
+.game-field.o .cell:not(.x):not(.o):hover::before {
+    background-color: lightblue;
+}
+
+.cell.x::before,
+.cell.x::after,
+.game-field.x .cell:not(.x):not(.o):hover::before,
+.game-field.x .cell:not(.x):not(.o):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--symbol-size)*.15);
+    height: var(--symbol-size);
+}
+
+.cell.x::before,
+.game-field.x .cell:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.game-field.x .cell:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg);
+}
+
+.cell.o::before,
+.cell.o::after,
+.game-field.o .cell:not(.x):not(.o):hover::before,
+.game-field.o .cell:not(.x):not(.o):hover::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.o::before,
+.game-field.o .cell:not(.x):not(.o):hover::before {
+    width: var(--symbol-size);
+    height: var(--symbol-size);
+}
+
+.cell.o::after,
+.game-field.o .cell:not(.x):not(.o):hover::after {
+    width: calc(var(--symbol-size) * .6);
+    height: calc(var(--symbol-size) * .6);
+    background-color: white;
+}
+
+
+.game-over-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+}
+
+.game-over-window.show {
+    display: flex;
+}
+
+.restart-btn {
+    font-size: 3rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+
+.restart-btn:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.game-over-window__text {
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
