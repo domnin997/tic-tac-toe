@@ -1,41 +1,18 @@
 import LSService from "./LSService.js";
+import getDOMElements from "./DOMElements.js";
+
+const { gameCells, gameField, modalOverlay, gameOverMsgBlock, 
+        gameOverMsg, progressWindow, resetBtns, continueBtn
+      } = getDOMElements();
+
+const {setProgressLS, getDataFirstLoad} = LSService();
+
+let {oCells, xCells, oTurn} = getDataFirstLoad();
 
 const x_class = 'x';
 const o_class = 'o';
-
-// let oTurn;
-
-const win_combos = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-];
-
-// Для направления в LS
-
-const {getProgressLS, setProgressLS} = LSService();
-
-function pageLoad () {
-    if (getProgressLS()) {
-        return getProgressLS();
-    } else {
-        return {oCells: [], xCells: [], oTurn: false};
-    };
-}
-
-const gameCells = document.querySelectorAll('.cell');
-const gameField = document.querySelector('.game-field');
-const gameOverWindow = document.querySelector('.game-over-window');
-const gameOverMsgBlock = document.querySelector('.game-over-msg');
-const gameOverMsg = document.querySelector('.game-over-window__text');
-const progressWindow = document.querySelector('.progress-dialog');
-const resetBtns = document.querySelectorAll('.reset-btn');
-const continueBtn = document.querySelector('.continue-btn');
+const win_combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+                    [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6],];
 
 gameCells.forEach((cell, index) => {
     cell.addEventListener('click' , () => {
@@ -47,36 +24,39 @@ gameCells.forEach((cell, index) => {
     })
 })
 
-let {oCells, xCells, oTurn} = pageLoad();
-
 resetBtns.forEach((btn) => {
+    
     btn.addEventListener('click', () => {
-        oCells = [];
-        xCells = [];
-        oTurn = false;
-        setProgressLS([], [], false);
-        gameOverWindow.classList.remove('show');
-        progressWindow.classList.remove('show');
-        gameCells.forEach((cell, index) => {
-            cell.classList.remove('x');
-            cell.classList.remove('o');
-            cell.removeEventListener('click', handleClick);
-            cell.addEventListener('click', handleClick, {once: true});
-        })
-        startGame();
+      
+      oCells = [];
+      xCells = [];
+      oTurn = false;
+        
+        setProgressLS(oCells, xCells, oTurn);
+
+          modalOverlay.classList.remove('show');
+          progressWindow.classList.remove('show');
+
+            gameCells.forEach((cell) => {
+              cell.classList.remove('x');
+              cell.classList.remove('o');
+              cell.removeEventListener('click', handleClick);
+              cell.addEventListener('click', handleClick, {once: true});
+            })
+
+        toggleFieldClass();
         
     })
 })
 
-
 if (oCells.length > 0 || xCells.length > 0) {
     
-    gameOverWindow.classList.add('show');
+    modalOverlay.classList.add('show');
     progressWindow.classList.add('show');
 
         continueBtn.addEventListener('click', () => {
 
-            gameOverWindow.classList.remove('show');
+            modalOverlay.classList.remove('show');
             progressWindow.classList.remove('show');
 
             oCells.forEach((index) => {
@@ -86,26 +66,20 @@ if (oCells.length > 0 || xCells.length > 0) {
             xCells.forEach((index) => {
                 gameCells[index].classList.add('x');
             })
-            
-            startGame();
-        })
-} else {
-    startGame();
-}
-
-console.log(oCells, xCells, oTurn);
-
-function startGame () {
-    oTurn = false;
-    
+        
+            gameCells.forEach((cell) => {
+                if (!cell.classList.contains('x') && !cell.classList.contains('o')) {
+                    cell.addEventListener('click', handleClick, {once: true})
+                }
+            })
+            toggleFieldClass();
+        })} 
+else {
     gameCells.forEach((cell) => {
         cell.addEventListener('click', handleClick, {once: true});
-        // addCellClickHandler(cell, index);
     })
-
     toggleFieldClass();
 }
-
 
 function handleClick (e) {
 
@@ -134,7 +108,7 @@ function endGame (noWinner) {
         gameOverMsg.innerText = `${oTurn ? `Победа нулей!` : `Кресты победили!`}`;
     }
 
-    gameOverWindow.classList.add('show');
+    modalOverlay.classList.add('show');
     gameOverMsgBlock.classList.add('show');
 }
 
@@ -172,33 +146,3 @@ function checkWin (currClass) {
         })
     })
 }
-
-
-function addCellClickHandler (cell, index) {
-    
-    if (!cell.classList.contains('x') && !cell.classList.contains('o')) {
-        cell.addEventListener('click', (e) => handClick(e, index), {once: true})
-    }
-}
-
-
-
-
-// function handClick (event, index) {
-//     const cell = event.target;
-//     const currClass = oTurn ? o_class : x_class;
-
-//             placeSymbol(cell, currClass);
-
-//             if (checkWin(currClass)) {
-//                 endGame(false);
-//                 setProgressLS([], [], false);
-//             } else if (isDraw()) {
-//                 endGame(true);
-//                 setProgressLS([], [], false);
-//             } else {
-//                 toggleTurn();
-//                 toggleFieldClass();
-//                 setProgressLS(xCells, oCells, oTurn);
-//             }  
-// }

@@ -3,4 +3,12 @@ html {
     --symbol-size: calc(var(--cell-size) * .9);
 
     --field-border-color: black;
+
+    --app-background: rgb(234, 233, 233);
+    --app-text-white: rgb(234, 233, 233);
+
+    --x-color: rgb(130, 234, 130);
+    --o-color: rgb(150, 160, 237);
+    --x-light-color: rgb(181, 254, 181);
+    --o-light-color: rgb(201, 207, 255);
 }

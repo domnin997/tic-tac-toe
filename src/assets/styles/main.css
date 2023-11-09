@@ -1,0 +1,9 @@
+@import url(./resetStyles.css);
+@import url(./variables.css);
+@import url(./gameFieldStyle.css);
+@import url(./modalWindowStyle.css);
+
+body {
+    font-family: Roboto;
+    background-color: var(--app-background);
+}

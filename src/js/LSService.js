@@ -8,5 +8,13 @@ export default function LSService () {
         return JSON.parse(localStorage.getItem('gameProgress'));
     }
 
-    return {getProgressLS, setProgressLS};
+    function getDataFirstLoad () {
+        if (getProgressLS()) {
+            return getProgressLS();
+        } else {
+            return {oCells: [], xCells: [], oTurn: false};
+        };
+    }
+
+    return {getProgressLS, setProgressLS, getDataFirstLoad};
 }

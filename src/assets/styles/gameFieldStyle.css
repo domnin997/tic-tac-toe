@@ -41,16 +41,21 @@
 }
 
 .cell.x::before,
-.cell.x::after,
-.cell.o::before {
-    background-color: var(--field-border-color);
+.cell.x::after {
+    background-color: var(--x-color);
 }
 
+.cell.o::before {
+    background-color: var(--o-color);
+}
 
 .game-field.x .cell:not(.x):not(.o):hover::before,
-.game-field.x .cell:not(.x):not(.o):hover::after,
+.game-field.x .cell:not(.x):not(.o):hover::after {
+    background-color: var(--x-light-color);
+}
+
 .game-field.o .cell:not(.x):not(.o):hover::before {
-    background-color: lightblue;
+    background-color: var(--o-light-color);
 }
 
 .cell.x::before,
@@ -92,49 +97,5 @@
 .game-field.o .cell:not(.x):not(.o):hover::after {
     width: calc(var(--symbol-size) * .6);
     height: calc(var(--symbol-size) * .6);
-    background-color: white;
-}
-
-
-.game-over-window {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 5rem;
-}
-
-.game-over-window.show {
-    display: flex;
-}
-
-.restart-btn {
-    font-size: 3rem;
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-    padding: .25em .5em;
-    cursor: pointer;
-}
-
-.restart-btn:hover {
-    background-color: black;
-    color: white;
-    border-color: white;
-}
-
-.game-over-window__text {
-    font-size: 3rem;
-    background-color: white;
-    border: 1px solid black;
-    color: black;
-    padding: .25em .5em;
-    cursor: pointer;
+    background-color: var(--app-background);
 }
