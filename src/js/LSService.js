@@ -11,8 +11,9 @@ export default function LSService () {
     function getDataFirstLoad () {
         if (getProgressLS()) {
             return getProgressLS();
+            
         } else {
-            return {oCells: [], xCells: [], oTurn: false};
+            return {oCells: [], xCells: [], oTurn:true};
         };
     }
 
